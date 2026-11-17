@@ -731,7 +731,7 @@ class DoctorTests(unittest.TestCase):
         self.assertEqual(marker_check.status, "pass")
         self.assertEqual(marker_check.detail, "cumcm: 11/11 section markers")
 
-    def test_workspace_state_requires_v31_and_matching_competition(self) -> None:
+    def test_workspace_state_requires_supported_schema_and_matching_competition(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             workspace = Path(temp)
             state_path = workspace / "state" / "decision_log.json"
@@ -770,6 +770,19 @@ class DoctorTests(unittest.TestCase):
                 item for item in boolean_stage if item.name == "workspace-state"
             )
             self.assertEqual(boolean_check.status, "fail")
+
+    def test_workspace_state_accepts_v31_and_v32_but_rejects_unknown_schemas(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            workspace = Path(temp)
+            state_path = workspace / "state/decision_log.json"
+            state_path.parent.mkdir()
+            state = json.loads((ROOT / "templates/shared/decision_log.json").read_text(encoding="utf-8"))
+            for version, expected in (("3.1", "pass"), ("3.2", "pass"), ("3.0", "fail"), ("9.0", "fail")):
+                with self.subTest(version=version):
+                    state["_schema_version"] = version
+                    state_path.write_text(json.dumps(state), encoding="utf-8")
+                    checks = doctor.run_checks(state["competition"], workspace=workspace, check_tools=False)
+                    self.assertEqual(next(item for item in checks if item.name == "workspace-state").status, expected)
 
     def test_require_renderer_and_skip_tools_are_mutually_exclusive(self) -> None:
         result = subprocess.run(

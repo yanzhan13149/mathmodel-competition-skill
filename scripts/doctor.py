@@ -28,6 +28,7 @@ _setup_utf8_stdio()
 
 SKILL_ROOT = Path(__file__).resolve().parent.parent
 COMPETITIONS = ("cumcm", "mcm", "diangong")
+SUPPORTED_STATE_SCHEMAS = ("3.1", "3.2")
 COMPETITION_FILES = (
     "README.md",
     "winning_patterns.md",
@@ -195,7 +196,7 @@ def run_checks(
     decision = parsed.get(decision_path, {})
     decision_schema_ok = (
         isinstance(decision, dict)
-        and decision.get("_schema_version") == "3.1"
+        and decision.get("_schema_version") in SUPPORTED_STATE_SCHEMAS
         and isinstance(decision.get("stages"), dict)
         and isinstance(decision.get("scores"), dict)
         and isinstance(decision.get("iterations"), dict)
@@ -206,9 +207,9 @@ def run_checks(
     checks.append(_check(
         "decision-log-schema",
         decision_schema_ok,
-        "decision_log schema 3.1 with compliance state"
-        if decision_schema_ok else "decision_log template is not a complete v3.1 state",
-        "Restore the v3.1 decision-log template before using the workflow."
+        f"decision_log schema {decision.get('_schema_version')} with compliance state"
+        if decision_schema_ok else "decision_log template is not a complete supported state (3.1 or 3.2)",
+        "Restore a supported decision-log template before using the workflow."
         if not decision_schema_ok else None,
     ))
 
@@ -282,7 +283,7 @@ def run_checks(
             compliance = value.get("compliance") if isinstance(value, dict) else None
             valid = (
                 ok and isinstance(value, dict)
-                and value.get("_schema_version") == "3.1"
+                and value.get("_schema_version") in SUPPORTED_STATE_SCHEMAS
                 and value.get("competition") == competition
                 and isinstance(value.get("current_stage"), int)
                 and not isinstance(value.get("current_stage"), bool)

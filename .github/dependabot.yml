@@ -1,4 +1,4 @@
-# Dependabot keeps GitHub Actions and the Python maintenance toolchain current.
+# Optional dependency update PRs. Set the limits above zero to enable them.
 #
 # The pip ecosystem only auto-detects conventional manifests, so it is scoped
 # to the real requirements file under scripts/ (offline corpus-maintenance
@@ -14,7 +14,7 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "ci"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
 
   - package-ecosystem: "pip"
     directory: "/scripts"
@@ -22,4 +22,4 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "build"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
