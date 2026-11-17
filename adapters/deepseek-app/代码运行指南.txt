@@ -1,0 +1,36 @@
+把 DeepSeek 给出的代码在电脑上运行
+
+一、只在 App 讨论时
+你可以先上传题目、附件和数学建模助手文件，完成读题、模型推导与代码准备。真实计算、绘图和论文编译需要实际执行环境；由自己或队伍中的编程成员完成后，再把结果传回 App。
+
+二、准备计算环境（在独立比赛目录运行）
+安装 Python 3.10 或更新版本。创建比赛文件夹，保留如下结构：
+data/raw/          原始附件
+data/processed/    处理后的数据
+code/              DeepSeek 给出的求解脚本
+results/           真实计算结果和运行记录
+figures/           真实结果图
+paper_workspace/   论文正文
+paper_output/      实际编译的文件
+
+已有仓库时可以用 scripts/start_contest.py 创建这些目录。将原始附件放到 data/raw，先阅读代码并确认输入、输出和安装依赖，再运行。
+
+Windows PowerShell 示例（每场比赛准备一次环境）：
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install numpy scipy pandas matplotlib scikit-learn openpyxl
+
+这只是基础依赖；代码使用额外库时按实际需要安装。将 DeepSeek 给出的完整代码保存为 code/q1.py，在比赛根目录执行：
+.venv\Scripts\python.exe code/q1.py
+
+如需保存运行输出，可改用：
+.venv\Scripts\python.exe code/q1.py 2>&1 | Tee-Object -FilePath results/q1-run.txt
+
+执行前确认 results 目录已经存在。保留原始附件，输出使用新文件；按代码实际约定修改参数和路径。不要把题面 PDF、账号密钥或真实比赛进度放进公开技能仓库。
+
+三、把证据反馈到 App
+发送脚本文件或版本、完整运行命令、输入文件名、参数和随机种子，再上传实际输出的 CSV、图或完整报错。只复制最后一个数字通常不足以核对约束、单位和处理过程。
+
+成功时请它先核对结果的范围、单位、约束、基线和异常，再解释结论。报错时提供完整 traceback，修改后重新运行。论文中的数值只使用实际成功运行的版本。
+
+四、论文
+生成正文后，按当届规则使用 Word 或 LaTeX 排版。LaTeX 需要另外安装 TeX Live 或 MiKTeX；本仓库有装配与检查脚本，但 App 上传资料不会自动在电脑上调用它们。最终 PDF 必须实际打开，核对页数、公式、图表和匿名后，再由队伍复核提交。

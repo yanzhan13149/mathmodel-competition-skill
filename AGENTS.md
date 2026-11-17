@@ -5,6 +5,7 @@ This repository contains the `mathmodel-skill` product. When working inside this
 ## Sources of truth
 
 - `SKILL.md` defines runtime behavior and trigger boundaries.
+- `adapters/deepseek-app/` defines the explicit manual handoff mode for App uploads. It does not imply local execution, account connection, or independent agent review.
 - `references/stage_00_kickoff.md` through `references/stage_09_review.md` contain stage details and must be loaded lazily at runtime.
 - `competitions/<competition>/` contains competition-specific rules, heuristics, overlays, and paper structures.
 - `templates/shared/decision_log.json` is the canonical persistent-state template.

@@ -10,7 +10,7 @@ import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-RESOURCES = ("agents", "assets", "competitions", "config", "references", "scripts", "templates", "tools")
+RESOURCES = ("agents", "assets", "competitions", "config", "references", "scripts", "templates", "tools", "adapters")
 FILES = ("SKILL.md", "使用指南.md", "LICENSE", "SOURCES.md", "THIRD_PARTY_NOTICES.md", "latexmkrc", "requirements-contest.txt", "比赛快速上手.md")
 
 

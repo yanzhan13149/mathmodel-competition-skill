@@ -18,6 +18,20 @@ python scripts/start_contest.py ../my-cumcm --competition cumcm
 
 PDF、Word、Excel 接口说明为本版新写，实际调用已安装工具；未打包上游明确禁止再分发的子工具代码。比赛题面、数据与论文放在独立比赛目录，技能公开仓库用于保存可复用流程。
 
+## 用 DeepSeek App 比赛
+
+已提供[DeepSeek App 使用包](adapters/deepseek-app/README.md)。在 App 新对话中上传[数学建模助手总控文件](adapters/deepseek-app/上传到DeepSeek.txt)与当场赛题，再复制[开场提示词](adapters/deepseek-app/开场提示词.txt)开始。也可以直接粘贴总控文件内容。
+
+手机上可从[最新发布页](https://github.com/yanzhan13149/mathmodel-competition-skill/releases/latest)下载完整 ZIP，解压后使用。
+
+Windows 双击 **`生成DeepSeekApp使用包.cmd`**，或执行：
+
+```powershell
+python scripts/export_deepseek_app.py ../DeepSeekApp使用包 --zip
+```
+
+这会导出 TXT、阶段卡和接力记录模板到仓库外，已有文件不覆盖。该模式通过 App 上传资料使用，未绑定账号或自动上传；代码运行、文件保存与论文编译由队伍在电脑完成。App 自查与独立复核分别记录，换对话时重新提供总控文件、接力记录和必要证据。
+
 ---
 
 ## 为什么需要它

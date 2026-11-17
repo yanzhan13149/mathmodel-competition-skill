@@ -23,6 +23,10 @@ python scripts/verify_all.py --full
 
 ## 运行时工具
 
+### `export_deepseek_app.py` — App 上传使用包
+
+`python scripts/export_deepseek_app.py ../DeepSeekApp使用包 --zip` 导出自包含总控 TXT、提示词、阶段卡和接力记录模板。`--competition cumcm|mcm|diangong` 附带对应历史规则基线；`--workspace <比赛目录>` 附带只读状态快照，不复制真实数据、结果、代码或完整 AI 对话。目标目录与 ZIP 已存在时拒绝覆盖。App 账号不会被连接或自动上传，详见 `adapters/deepseek-app/README.md`。
+
 ### `install_local.py` 与 `start_contest.py` — 个人比赛入口
 
 `python scripts/install_local.py` 安装完整技能到 Codex；`--client claude` 安装到 Claude Code，`--dest` 可指定准确的技能目录。目标已存在时停止，不覆盖。

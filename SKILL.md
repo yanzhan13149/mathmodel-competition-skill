@@ -17,6 +17,8 @@ description: CUMCM 国赛、MCM/ICM 美赛与电工杯的建模竞赛工作流�
 
 个人比赛入口：需要新建比赛目录时，可运行 `<SKILL_ROOT>/scripts/start_contest.py <新目录> --competition <cumcm|mcm|diangong>`；只传入已知且由用户提供的信息。已有状态先读取并续做，不重新初始化。PDF、Word、Excel 的 `tools/*/SKILL.md` 是外部工具接口，先读取并使用当前环境实际可用的工具，不调用上游旧版专有脚本。
 
+用户使用 DeepSeek App 纯对话模式时，读取 `adapters/deepseek-app/README.md` 并提供该目录的 `上传到DeepSeek.txt`；可用 `scripts/export_deepseek_app.py` 导出上传包。App 版采用显式人工交接：实际运行与文件保存交给队伍，作者自查不记为独立门禁通过，未知状态不自动改成完成。下列工具执行协议用于具备相应文件、终端和独立任务能力的环境。
+
 ## 强制执行协议
 
 用户点名本 Skill 或任务命中时，严格执行，不降级为建议：

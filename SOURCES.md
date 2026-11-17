@@ -6,6 +6,7 @@
 - 发布仓库：[yanzhan13149/mathmodel-competition-skill](https://github.com/yanzhan13149/mathmodel-competition-skill)。
 - 直接来源：[rootkiller6788/mathmodel-skill](https://github.com/rootkiller6788/mathmodel-skill)，基线提交 `a5f4d60c7db2a98e1284b1995a1aaaaa008facd5`，版本 `6.1.1`。
 - 本版新增：Windows 安装入口、完整技能安装器、独立比赛项目初始化、最小依赖、中文快速指南与相关测试；同步修正论文手的默认交付说明，使其遵循根入口的 LaTeX/PDF 默认路线。
+- v6.3.0 新增 DeepSeek App 上传资料、阶段任务卡、人工接力记录与导出器。App 版单独说明本地执行和独立验收边界，不声称已绑定 App 账号或自动运行工具。
 - `tools/docx`、`tools/pdf`、`tools/xlsx` 的原代码和专有 Skill 未纳入本版，以独立编写的接口说明替代。新仓库使用干净历史，避免通过旧提交再次发布这些文件。
 - 保留来源信息与原有 MIT 声明。本版插件署名表示维护身份，不将上游工作声称为原创。
 

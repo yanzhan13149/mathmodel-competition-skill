@@ -9,6 +9,8 @@
 | `decision_log.json` | 唯一状态源的**规范模板**（schema v3.2，兼容 v3.1）：`competition`/`task_type`/`problem`/`current_stage`/`compliance`/`stages`/`scores` 等；初始化事件不表示规则和 AI 使用已核验。工作流每阶段读写用户项目 `state/decision_log.json`。 |
 | `ai_usage_ledger.json` | AI 使用台账条目模板（schema 1.1）。把 `compliance` 节并入 decision_log；逐条按时间追加，字段含 `tool`/`model`/`use_stage`/`query`/`output`/`human_review` 等。显式空数组表示「未使用 AI」。 |
 
+DeepSeek App 使用 `adapters/deepseek-app/接力记录模板.txt` 进行人工交接。`scripts/export_deepseek_app.py --workspace <比赛目录>` 可导出已有状态的只读快照，不改变此 schema 或原文件；App 的作者自查不等于独立验收，不能直接将聊天中的“完成”回写为门禁通过。
+
 ## 论文表格模板（markdown 段，论文手阶段使用）
 
 | 文件 | 用途 |

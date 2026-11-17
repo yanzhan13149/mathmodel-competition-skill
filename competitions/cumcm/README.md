@@ -61,3 +61,5 @@
 ## 个人比赛版本入口
 
 在技能仓库中执行 `python scripts/start_contest.py ../my-cumcm --competition cumcm` 建立独立比赛目录，然后在 Codex 打开该目录，使用 `$mathmodel-skill` 继续。已存在的目录不会被覆盖；未提供的届次、题号和截止时间不作猜测。当届规则仍需实时核验，初始化不代表通过任何质量门禁。
+
+使用 DeepSeek App 时，先按根目录 `adapters/deepseek-app/README.md` 上传总控文件、赛题与附件；导出命令加 `--competition cumcm` 可附带本竞赛的历史规则基线，实际参赛时仍须核验当届文件。App 通过接力记录交接，真实计算与独立复核由队伍完成。

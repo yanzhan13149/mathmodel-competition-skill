@@ -1,5 +1,7 @@
 # Harness 兼容协议 (Claude Code / Codex)
 
+DeepSeek App 的聊天上传模式见 `adapters/deepseek-app/README.md`。它使用总控 TXT 和人工交接记录，电脑端实际执行代码、保存文件与编译；本文件后续关于自动文件读写、终端、独立子任务和状态落盘的约定只适用于具备这些工具的环境。App 自查不能被表述为独立门禁通过。
+
 本文件定义 mathmodel-skill 在不同 agentic harness 下运行时的**统一行为约定**。从 v6.0 起, Codex 以原生 skill / plugin 形态发现本仓库, 但 skill 主体内容 (`SKILL.md`, `stage_NN.md`, `competitions/*`) 仍为 harness-agnostic, 仅在以下方面有差异。
 
 ---
