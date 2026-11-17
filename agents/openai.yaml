@@ -1,0 +1,4 @@
+interface:
+  display_name: "MathModel｜我的数学建模比赛工具箱"
+  short_description: "为国赛、美赛和电工杯准备可恢复的建模、求解、写作与终审流程"
+  default_prompt: "Use $mathmodel-skill to guide my team from problem selection through a compliant final submission."
