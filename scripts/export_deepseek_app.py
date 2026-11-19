@@ -59,6 +59,10 @@ def read_snapshot(workspace: Path) -> tuple[str, str]:
         "_schema_version", "competition", "problem", "problem_meta", "current_stage",
         "mode", "started_at", "paper_metadata",
     )}
+    startup_checks = state.get("startup_checks")
+    if startup_checks is not None and not isinstance(startup_checks, dict):
+        raise ValueError("startup_checks must be null or an object")
+    snapshot["startup_checks"] = without_docs(startup_checks)
     snapshot["compliance"] = {
         "ruleset": without_docs(compliance["ruleset"]),
         "ai_usage_summary": {

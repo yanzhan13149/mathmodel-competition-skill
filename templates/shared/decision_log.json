@@ -24,6 +24,13 @@
   "mode": "standard",
   "started_at": null,
   "current_stage": 0,
+  "startup_checks": {
+    "_doc": "schema 3.2 的可选、向后兼容环境检查摘要。每次调用复核网络、赛事文件上传下载、Word和四个文献入口；HTTP报告不等于浏览器或本机操作证据。旧状态缺少此字段时补充，不重初始化。",
+    "checked_at": null,
+    "report_path": null,
+    "overall_status": null,
+    "manual_evidence": []
+  },
   "compliance": {
     "ruleset": {
       "competition_year": null,

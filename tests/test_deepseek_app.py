@@ -77,6 +77,58 @@ class DeepSeekAppTests(unittest.TestCase):
                 snapshot = json.loads(text[text.index("{"):])
                 self.assertEqual(snapshot["compliance"]["ai_usage_summary"]["status"], expected)
 
+    def test_readiness_snapshot_preserves_evidence_and_unknowns_without_copying_reports(self):
+        with tempfile.TemporaryDirectory() as temp:
+            workspace = starter.create_workspace(Path(temp) / "contest", "mcm")
+            state_file = workspace / "state/decision_log.json"
+            state = json.loads(state_file.read_text(encoding="utf-8"))
+            checks = {
+                "_doc": "internal documentation",
+                "checked_at": "2026-11-19T11:00:00+08:00",
+                "report_path": "state/readiness/latest.json",
+                "overall_status": "needs_attention",
+                "word": {"status": "pending_manual", "evidence": None},
+                "network": [{"url": "https://www.mdpi.com", "status": "restricted"}],
+            }
+            state["startup_checks"] = checks
+            state_file.write_text(json.dumps(state), encoding="utf-8")
+            report = workspace / "state/readiness/latest.json"
+            report.parent.mkdir(parents=True, exist_ok=True)
+            report.write_text('{"private_test_report": true}', encoding="utf-8")
+            original = state_file.read_bytes()
+            output, _ = exporter.export_pack(Path(temp) / "kit", workspace=workspace)
+            text = (output / "比赛状态快照.txt").read_text(encoding="utf-8")
+            snapshot = json.loads(text[text.index("{"):])
+            self.assertEqual(snapshot["startup_checks"], {k: v for k, v in checks.items() if not k.startswith("_")})
+            self.assertIsNone(snapshot["startup_checks"]["word"]["evidence"])
+            self.assertEqual(state_file.read_bytes(), original)
+            self.assertFalse((output / "state").exists())
+
+    def test_legacy_readiness_is_unknown_and_not_written_back(self):
+        with tempfile.TemporaryDirectory() as temp:
+            workspace = starter.create_workspace(Path(temp) / "contest", "cumcm")
+            state_file = workspace / "state/decision_log.json"
+            state = json.loads(state_file.read_text(encoding="utf-8"))
+            state.pop("startup_checks", None)
+            state_file.write_text(json.dumps(state), encoding="utf-8")
+            original = state_file.read_bytes()
+            _, text = exporter.read_snapshot(workspace)
+            snapshot = json.loads(text[text.index("{"):])
+            self.assertIsNone(snapshot["startup_checks"])
+            self.assertEqual(state_file.read_bytes(), original)
+
+    def test_invalid_readiness_snapshot_does_not_create_output(self):
+        with tempfile.TemporaryDirectory() as temp:
+            workspace = starter.create_workspace(Path(temp) / "contest", "mcm")
+            state_file = workspace / "state/decision_log.json"
+            state = json.loads(state_file.read_text(encoding="utf-8"))
+            state["startup_checks"] = ["passed"]
+            state_file.write_text(json.dumps(state), encoding="utf-8")
+            output = Path(temp) / "kit"
+            with self.assertRaisesRegex(ValueError, "startup_checks"):
+                exporter.export_pack(output, workspace=workspace)
+            self.assertFalse(output.exists())
+
     def test_conflicts_and_invalid_inputs_do_not_create_output(self):
         with tempfile.TemporaryDirectory() as temp:
             base = Path(temp)

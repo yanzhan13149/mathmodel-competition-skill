@@ -2,17 +2,30 @@
 
 这是为 DeepSeek App 对话准备的资料包，通过上传文件使用，无需配置 API Key。文件已准备好，但不表示已绑定你的 DeepSeek 账号或已上传到手机。
 
-下载完整使用包：[GitHub 最新发布页](https://github.com/yanzhan13149/mathmodel-competition-skill/releases/latest)。解压后，首次只需上传 `上传到DeepSeek.txt` 与赛题附件。
+获取当前总控文件：[main 分支完整 ZIP](https://github.com/yanzhan13149/mathmodel-competition-skill/archive/refs/heads/main.zip)，解压后在 `adapters/deepseek-app/` 找到 `上传到DeepSeek.txt`；[GitHub 最新发布页](https://github.com/yanzhan13149/mathmodel-competition-skill/releases/latest)提供已打包版本，已有发布包不会随 main 提交自动更新。首次只需上传总控文件与赛题附件；GitHub 更新后，旧对话需要重新上传新版总控才能采用新流程。
 
 ## 第一次使用
 
 1. 在 DeepSeek App 新建对话，上传本目录的 **`上传到DeepSeek.txt`**，再上传当场比赛的题目 PDF 和数据附件。若 App 未接收 TXT，可以打开文件并将其文字粘贴到对话中。
 2. 复制 **`开场提示词.txt`** 的“第一次开赛”部分发给它；把已知的竞赛届次、队员分工、截止时间写上，未知信息可以留空。
-3. 让它先检查实际读到了哪些文件，再做选题、拆题和建模。需要更详细流程时，按任务上传 `阶段卡/` 中对应文件，不必一次上传整库。
+3. 让它先检查实际读到了哪些文件，并复核下列环境清单，再做选题、拆题和建模。需要更详细流程时，按任务上传 `阶段卡/` 中对应文件，不必一次上传整库。
 4. 求解代码保存到电脑运行，将真实结果表、运行记录或完整报错传回 App，再分析、画图和写作。具体见 `代码运行指南.txt`。
 5. 阶段结束让它按 `接力记录模板.txt` 整理进度。将这段记录保存到手机或电脑；换对话时重新上传总控文件、最新接力记录和必要的结果文件。
 
 首次只需总控文件、题目和必要附件。ZIP 用于下载和转移，解压后上传里面的 TXT，不依赖 App 能否读取压缩包。不要用 Codex 的安装按钮代替 App 上传，也不要假定发送 GitHub 链接会加载整个仓库。
+
+## 每次调用的环境复核与文献入口
+
+每次启动或显式续做流程，都复核赛事官网、文件上传下载、Word 和浏览器的当前证据，并在接力记录中保存核对日期、执行端、状态及证据。有可用联网功能时实际访问官网及下面四站；打不开或没有验证能力的项目标为“受限”或“待验证”，继续不依赖它的工作，保留当前比赛进度。
+
+- MDPI：<https://www.mdpi.com>
+- Springer：<https://link.springer.com>
+- Elsevier（ScienceDirect）：<https://www.sciencedirect.com>
+- IEEE Xplore：<https://ieeexplore.ieee.org>
+
+Word 的打开、编辑、保存与重开，以及电脑浏览器和文件传输测试，由队员实际操作并提供结果；App 联网不等于本地软件验证。上传测试只使用队伍已授权的赛事官方测试或草稿入口，不提交正式作品，不自动登录或向无关网站上传比赛资料。
+
+文献任务优先用相关中英文关键词在这四站检索 OA 全文，核对原始出版页或 DOI，并记录全文链接、访问日期与可用范围。各站并非所有文章都免费；只有摘要或元数据时明确标出，付费、验证码或无法下载全文的条目保持受限。
 
 ## 两端分别做什么
 
@@ -38,7 +51,7 @@ python scripts/export_deepseek_app.py ../DeepSeekApp国赛包 --competition cumc
 python scripts/export_deepseek_app.py ../DeepSeekApp续聊包 --workspace ../my-cumcm --zip
 ```
 
-`--competition` 也支持 `mcm`、`diangong`。`--workspace` 只导出已有状态中的选定字段，不修改原项目。导出位置必须在技能仓库外；含有真实比赛进度的包保留在本地，按需要自行上传。
+`--competition` 也支持 `mcm`、`diangong`。`--workspace` 只导出已有状态中的选定字段，包括可选的 `startup_checks` 环境检查摘要，不修改原项目；旧状态缺少该项时保持未知，不能当成本次已通过。导出位置必须在技能仓库外；含有真实比赛进度的包保留在本地，按需要自行上传。
 
 ## 官方能力依据
 

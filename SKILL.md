@@ -24,13 +24,14 @@ description: CUMCM 国赛、MCM/ICM 美赛与电工杯的建模竞赛工作流�
 用户点名本 Skill 或任务命中时，严格执行，不降级为建议：
 
 1. 首次进度更新中回显：已激活本 Skill、`<cwd>`、当前阶段、目标竞赛与届次、计划读取的角色和工具入口。未确认的官方规则标为待核验。
-2. 进入每个阶段前**实际读取**该阶段角色 `SKILL.md`；使用 PDF、Excel、论文搜索、DOCX 或 LaTeX 时再读取对应工具 `SKILL.md`。知道路径 ≠ 已执行。
-3. 严格调用本 Skill 提供的脚本和模板；已有初始化、转换、编译或校验工具时，禁止手写替代实现。
-4. 任何校验预警视为未完成；只有当届官方规则或用户明确要求允许偏离时，记录“规则来源、偏离项、理由”后继续。
-5. 环境缺少引擎、搜索源或依赖时，报告阻塞并继续完成仍可验证的部分；禁止静默换工具或用较差产物冒充完成。
-6. 按 `references/Subagent调度.md` 在 `M1/P1/P2/W1/W2` 节点立即派发独立质检，禁止等全流程结束后才首次派发；作者自检不能替代独立验收。除固定质检外不主动派发其他 Subagent。
-7. 交付前运行当前阶段的全部完成门禁；任一命令未运行、退出码非零、门禁未通过时，不得声称“已完成”。
-8. 最终回复列出实际读取的入口、实际运行的关键命令与退出码、门禁状态、核心质量指标和仍存在的阻塞；不得只说“已检查”。
+2. **每次调用都先复核环境**，包括续做、局部修订和终审：读取 `references/startup_readiness.md`，检查赛事官网与文件上传下载、Word 使用情况，以及 MDPI、Springer、ScienceDirect、IEEE Xplore 四个文献入口。具备终端时运行 `scripts/check_readiness.py --workspace <cwd>`；官网地址已确认时加 `--official-url <URL>`。HTTP 探测、浏览器实测和队员确认分别留证，不能互相冒充。将本轮报告摘要写入 `decision_log.startup_checks`，未知项保持待验证；继续不依赖受限工具的任务，不重置已有比赛进度。
+3. 进入每个阶段前**实际读取**该阶段角色 `SKILL.md`；使用 PDF、Excel、论文搜索、DOCX 或 LaTeX 时再读取对应工具 `SKILL.md`。知道路径 ≠ 已执行。
+4. 严格调用本 Skill 提供的脚本和模板；已有初始化、转换、编译或校验工具时，禁止手写替代实现。
+5. 任何校验预警视为未完成；只有当届官方规则或用户明确要求允许偏离时，记录“规则来源、偏离项、理由”后继续。
+6. 环境缺少引擎、搜索源或依赖时，报告阻塞并继续完成仍可验证的部分；禁止静默换工具或用较差产物冒充完成。
+7. 按 `references/Subagent调度.md` 在 `M1/P1/P2/W1/W2` 节点立即派发独立质检，禁止等全流程结束后才首次派发；作者自检不能替代独立验收。除固定质检外不主动派发其他 Subagent。
+8. 交付前运行当前阶段的全部完成门禁；任一命令未运行、退出码非零、门禁未通过时，不得声称“已完成”。
+9. 最终回复列出实际读取的入口、实际运行的关键命令与退出码、门禁状态、核心质量指标和仍存在的阻塞；不得只说“已检查”。
 
 ## 三竞赛 × 三模式矩阵
 
@@ -92,6 +93,7 @@ L1 每阶段轻量打分，L2 跨阶段回检，L3 独立 Panel，L4 证据校�
 只在进入阶段 N 时加载 `references/stage_NN_*.md`，**切勿**一次性全读。各阶段额外加载：
 
 - 每阶段开头/结尾：`<cwd>/state/decision_log.json` 必读/必写。
+- 每次调用：`references/startup_readiness.md`；需要参考文献时按 `tools/paper_search/SKILL.md` 优先检查四个出版平台的相关 OA 文献，再核验原始出版页、DOI 和全文权限。
 - Stage 1：`competitions/<comp>/topic_specs.json`；Stage 3/5：`references/model_catalog.md`（候选生成）再按 `references/算法索引.md` 读对应 `assets/*.md`（算法实现深挖）。
 - Stage 0/8/9：`competitions/<comp>/current_rules.md` 并核对官方链接。
 - Stage 8：`competitions/<comp>/{winning_patterns,phrase_bank,abstract_template,paper_skeleton}.md` + cumcm 的 `style_guide.md`；经验锚点 `empirical.json` 只作参考。

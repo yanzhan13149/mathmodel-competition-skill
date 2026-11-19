@@ -26,6 +26,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p "test_contest_setup.py" -v
           python -m unittest discover -s tests -p "test_deepseek_app.py" -v
+          python -m unittest discover -s tests -p "test_readiness.py" -v
 
   test:
     name: test · Python ${{ matrix.python-version }}

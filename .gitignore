@@ -11,6 +11,7 @@ credentials.json
 state/decision_log.json
 state/scores.json
 state/iteration_counts.json
+state/readiness/
 results/
 figures/
 paper_workspace/

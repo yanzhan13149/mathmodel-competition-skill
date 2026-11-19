@@ -22,7 +22,7 @@ PDF、Word、Excel 接口说明为本版新写，实际调用已安装工具；�
 
 已提供[DeepSeek App 使用包](adapters/deepseek-app/README.md)。在 App 新对话中上传[数学建模助手总控文件](adapters/deepseek-app/上传到DeepSeek.txt)与当场赛题，再复制[开场提示词](adapters/deepseek-app/开场提示词.txt)开始。也可以直接粘贴总控文件内容。
 
-手机上可从[最新发布页](https://github.com/yanzhan13149/mathmodel-competition-skill/releases/latest)下载完整 ZIP，解压后使用。
+手机上可下载[main 分支完整 ZIP](https://github.com/yanzhan13149/mathmodel-competition-skill/archive/refs/heads/main.zip)，解压后在 `adapters/deepseek-app/` 找到当前总控文件；[最新发布页](https://github.com/yanzhan13149/mathmodel-competition-skill/releases/latest)提供已打包版本，已有发布包不会随 main 提交自动更新。
 
 Windows 双击 **`生成DeepSeekApp使用包.cmd`**，或执行：
 
@@ -84,6 +84,25 @@ python scripts/install_local.py --client claude  # Claude Code（按需）
 
 首次启动收集 5 个启动字段（竞赛 / 题号 / 队员特长 / 截止时间 / 题目 PDF 路径），自动初始化 `<cwd>/state/decision_log.json` 后进入 Stage 0。
 
+### 每次调用的环境检查与文献检索
+
+每次调用 `$mathmodel-skill`（包括续做和终稿检查），先按[环境检查流程](references/startup_readiness.md)复核赛事官网和文件上传下载、Word 是否能打开/编辑/保存，以及浏览器能否打开下列入口：
+
+| 平台 | 文献入口 |
+|---|---|
+| MDPI | https://www.mdpi.com |
+| Springer | https://link.springer.com |
+| Elsevier ScienceDirect | https://www.sciencedirect.com |
+| IEEE Xplore | https://ieeexplore.ieee.org |
+
+需要参考文献时，优先在四站查找相关 OA 全文，并结合现有 OpenAlex + AnySearch 交叉核验原始出版页和 DOI。不是所有检索结果都免费；访问受限、只读摘要或尚未下载的情况按实际记录。
+
+终端模式运行 `python <SKILL_ROOT>/scripts/check_readiness.py --workspace . --official-url <已确认的赛事官网URL>`，产生 `state/readiness/latest.json`。HTTP 可达不代表本机浏览器、Word 或文件传输通过；缺少证据的项目保留待验证，继续不依赖它们的任务。报告摘要写入可选的 `decision_log.startup_checks`，兼容既有 3.1/3.2 状态。
+
+DeepSeek App 版总控和接力记录已包含相同要求；本机操作由队员执行并回传证据，换对话后使用更新后的总控文件。
+
+GitHub 更新不会自动刷新旧安装或旧对话。Codex 需要更新本地技能副本；DeepSeek 需要重新上传新版 `上传到DeepSeek.txt`。安装器仍拒绝覆盖已有目录，更新前保留本地修改。
+
 ### 工作区产物结构
 
 ```text
@@ -144,6 +163,7 @@ python scripts/latex_check/check_pdf.py main.pdf --identity-mode strict
 | `scripts/install_local.py` | 完整安装到 Codex 或 Claude Code，拒绝覆盖已有目录 |
 | `scripts/start_contest.py` | 创建独立比赛工作区和状态，不覆盖既有项目 |
 | `scripts/doctor.py` | 检查 skill 结构、竞赛包、环境与工作区（`--competition cumcm \| mcm \| diangong`） |
+| `scripts/check_readiness.py` | 每次调用的官网与四个文献站 HTTP 探测；浏览器、Word 和上传下载按实际证据另行确认 |
 | `scripts/score_artifact.py` | 校验 critic JSON、重算加权分数与 verdict、聚合 per-Qi |
 | `scripts/extract_diff.py` | 生成并应用 section-level patch |
 | `scripts/render_paper.py` | 装配 paper_workspace 为三竞赛 TeX/PDF |

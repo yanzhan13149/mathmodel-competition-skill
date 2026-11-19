@@ -8,6 +8,7 @@ outputs:
   - "stage.0.{team_roles, tools_ready, problem_scan, time_budget_h, collab_protocol, checklist_completed}"
   - "root.{competition, task_type}"
 loads_reference:
+  - "references/startup_readiness.md"
   - "competitions/<comp>/current_rules.md"
   - "competitions/<comp>/topic_specs.json"
   - "competitions/<comp>/README.md"
@@ -91,6 +92,8 @@ next: "stage_01_problem_selection | wait_for_prompt"
 每位真实队员写一句"我对这道题/这个角色的最大顾虑是什么"。
 
 ### Step 3: 工具就绪 checklist (15 min)
+
+先按 `references/startup_readiness.md` 检查赛事官网与文件上传下载、Word、浏览器及四个文献入口，并把报告摘要写入 `decision_log.startup_checks`。该检查在后续每次调用时也复核，不只执行于 Stage 0；实际浏览器/Word/传输证据与 HTTP 探测分开记录，无法验证的项目不能标为通过。
 
 逐项确认 (bash 验证):
 
